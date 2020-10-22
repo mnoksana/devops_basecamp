@@ -1,0 +1,17 @@
+all:
+  children:
+    gcp3:
+      hosts:
+        35.197.38.231: {}
+    gcp4:
+      hosts:
+        35.227.161.175: {}
+    iaac:
+      children:
+        gcp1:
+          hosts:
+            34.83.164.21: {}
+        gcp2:
+          hosts:
+            35.199.170.252: {}
+    ungrouped: {}

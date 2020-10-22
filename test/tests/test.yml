@@ -1,0 +1,55 @@
+---
+- hosts: iaac
+  become: yes
+  become_user: root
+  vars:
+    iaac_content: "Hello, Ansible!"
+    
+  tasks:
+    
+    - name: Check OS family
+      debug: msg="This is my OS"
+      when: ansible_os_family == "Debian"
+    
+    - group: name=sudo state=present
+    
+    - name: Check if admin logged
+      command: who
+      register: who_check
+    
+    - debug: var=who_check
+    
+
+    - name: Copy file  
+      copy:
+        content: "{{ iaac_content }}"
+        # src: ../files/iaac
+        dest: /etc/iaac
+        owner: root
+        group: root
+        mode: '0500'
+        backup: no
+    
+    - name: Check if admin logged
+      command: cat /etc/iaac
+      register: is_copied
+
+    - debug: var=is_copied.stdout
+
+- hosts: 
+    gcp3 
+    gcp4
+  tasks:
+      - name: Check OS family
+        debug: msg="This is my OS"
+        when: ansible_os_family == "Debian"
+      
+      - group: name=sudo state=present
+      
+      - name: Check if admin logged
+        command: who
+        register: who_check
+      
+      - debug: var=who_check
+
+    
